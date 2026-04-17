@@ -93,16 +93,17 @@ The system features a **multi-role architecture with 15+ distinct roles**, each 
 
 ---
 
+```markdown
 ## 📈 System Maturity & Roadmap
 
 | Category | MVP Completion | Production Readiness |
-|:---|:---:|:---:|
-| ![Security](https://img.shields.io/badge/Security_&_Auth-85%25|45%25-yellow?style=flat-square) | 85% | 45% |
-| ![Academics](https://img.shields.io/badge/Academics-80%25|55%25-yellow?style=flat-square) | 80% | 55% |
-| ![Student](https://img.shields.io/badge/Student_Lifecycle-70%25|40%25-yellow?style=flat-square) | 70% | 40% |
-| ![Finance](https://img.shields.io/badge/Finance_HR-50%25|30%25-orange?style=flat-square) | 50% | 30% |
-| ![Infra](https://img.shields.io/badge/Infrastructure-40%25|20%25-red?style=flat-square) | 40% | 20% |
-
+|:---------|:--------------:|:--------------------:|
+| **Security & Auth** | ![MVP 85%](https://img.shields.io/badge/85%25-yellow?style=flat-square) | ![Prod 45%](https://img.shields.io/badge/45%25-yellow?style=flat-square) |
+| **Academics** | ![MVP 80%](https://img.shields.io/badge/80%25-yellow?style=flat-square) | ![Prod 55%](https://img.shields.io/badge/55%25-yellow?style=flat-square) |
+| **Student Lifecycle** | ![MVP 70%](https://img.shields.io/badge/70%25-yellow?style=flat-square) | ![Prod 40%](https://img.shields.io/badge/40%25-yellow?style=flat-square) |
+| **Finance & HR** | ![MVP 50%](https://img.shields.io/badge/50%25-orange?style=flat-square) | ![Prod 30%](https://img.shields.io/badge/30%25-orange?style=flat-square) |
+| **Infrastructure** | ![MVP 40%](https://img.shields.io/badge/40%25-red?style=flat-square) | ![Prod 20%](https://img.shields.io/badge/20%25-red?style=flat-square) |
+```
 ### 🚀 Planned Features
 
 > [!TIP]
