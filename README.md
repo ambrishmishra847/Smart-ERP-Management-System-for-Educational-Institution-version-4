@@ -91,9 +91,6 @@ The system features a **multi-role architecture with 15+ distinct roles**, each 
 | **Audit Trails** | Custom Audit Logging System |
 | **Auth** | JWT + bcrypt with salt rounds |
 
----
-
-```markdown
 ## 📈 System Maturity & Roadmap
 
 | Category | MVP Completion | Production Readiness |
@@ -103,7 +100,7 @@ The system features a **multi-role architecture with 15+ distinct roles**, each 
 | **Student Lifecycle** | ![MVP 70%](https://img.shields.io/badge/70%25-yellow?style=flat-square) | ![Prod 40%](https://img.shields.io/badge/40%25-yellow?style=flat-square) |
 | **Finance & HR** | ![MVP 50%](https://img.shields.io/badge/50%25-orange?style=flat-square) | ![Prod 30%](https://img.shields.io/badge/30%25-orange?style=flat-square) |
 | **Infrastructure** | ![MVP 40%](https://img.shields.io/badge/40%25-red?style=flat-square) | ![Prod 20%](https://img.shields.io/badge/20%25-red?style=flat-square) |
-```
+
 ### 🚀 Planned Features
 
 > [!TIP]
