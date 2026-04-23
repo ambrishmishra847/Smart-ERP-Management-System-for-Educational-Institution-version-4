@@ -1,0 +1,3 @@
+rollNumber,studentEmail,academicYear,totalAmount,paidAmount,dueDate,status
+"BCA26001","karan.mehta@student.edu","2026-2027","85000","40000","2026-07-15","partial"
+"BCA26002","nidhi.singh@student.edu","2026-2027","85000","85000","2026-07-15","paid"

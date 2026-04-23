@@ -1,0 +1,3 @@
+studentName,email,phone,program,academicYear,source,documentsVerified,score,status,notes
+"Riya Sharma","riya.sharma@example.edu","9876543210","B.Tech CSE","2026-2027","website","true","88","under-review","Interested in hostel facility."
+"Aman Verma","aman.verma@example.edu","9811122233","MBA","2026-2027","campaign","false","76","lead","Follow-up scheduled after counseling session."

@@ -1,0 +1,3 @@
+name,email,employeeId,department,role,password,username,phone
+"Dr. Meera Khanna","meera.khanna@college.edu","FAC-2601","Computer Science","faculty-professor","Faculty@123","meera.khanna","9890011223"
+"Rohit Kapoor","rohit.kapoor@college.edu","PLC-2602","Training and Placement","placement-cell","Placement@123","rohit.kapoor","9870011223"

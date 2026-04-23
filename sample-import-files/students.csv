@@ -1,0 +1,3 @@
+name,email,rollNumber,className,parentEmail,password,phone
+"Karan Mehta","karan.mehta@student.edu","BCA26001","BCA 1st Year","sunita.mehta@parent.edu","Student@123","9898989898"
+"Nidhi Singh","nidhi.singh@student.edu","BCA26002","BCA 1st Year","rajesh.singh@parent.edu","Student@123","9876501234"

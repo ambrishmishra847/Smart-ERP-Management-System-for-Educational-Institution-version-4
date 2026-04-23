@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-body text-mist antialiased;
+  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+input,
+select,
+textarea {
+  color: #0f172a;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #64748b;
+}
+
+.panel {
+  @apply border border-white/10 bg-slate-900/90 shadow-panel;
+}
+
+.panel-soft {
+  @apply border border-white/10 bg-slate-800/80;
+}
+
+.text-gradient {
+  @apply text-white;
+}
