@@ -13,6 +13,10 @@ const DashboardLayout = ({ children }) => {
   const [showNews, setShowNews] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
+  const normalizeNotifications = (payload) => (
+    Array.isArray(payload) ? payload : payload?.rows || []
+  );
+
   useEffect(() => {
     if (!user?._id) {
       return undefined;
@@ -23,15 +27,23 @@ const DashboardLayout = ({ children }) => {
   }, [user]);
 
   useEffect(() => {
+    if (!user?._id) {
+      return undefined;
+    }
+
     const loadNotifications = async () => {
       const response = await api.get("/erp/notifications?limit=6");
-      setNotifications(response.data);
+      setNotifications(normalizeNotifications(response.data));
     };
 
     loadNotifications();
-  }, []);
+  }, [user?._id]);
 
   useEffect(() => {
+    if (!user?._id) {
+      return undefined;
+    }
+
     const socket = connectSocket(user._id);
 
     const handleNotification = (notification) => {
@@ -40,7 +52,7 @@ const DashboardLayout = ({ children }) => {
 
     socket.on("notification:new", handleNotification);
     return () => socket.off("notification:new", handleNotification);
-  }, [user]);
+  }, [user?._id]);
 
   const unreadCount = notifications.filter((item) => !item.isRead).length;
 

@@ -65,8 +65,6 @@ userSchema.methods.matchPassword = function matchPassword(password) {
 };
 
 userSchema.index({ role: 1, createdAt: -1 });
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
 userSchema.index({ rollNumber: 1 });
 userSchema.index({ employeeId: 1 });
 userSchema.index({ className: 1, section: 1 });

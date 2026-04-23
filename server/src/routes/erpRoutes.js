@@ -56,38 +56,72 @@ import { PERMISSIONS, ROLES } from "../utils/constants.js";
 import {
   createBook,
   createFinanceTransaction,
+  createHostelGatePass,
+  createHostelMaintenance,
+  createHostelRoom,
   createInvoice,
   createLeaveRequest,
+  createParentCommunication,
   createPayrollRun,
   createApprovalItem,
   createSyllabusProgress,
+  createTransportAllocation,
+  createTransportRoute,
+  createTransportVehicle,
   deleteBook,
   deleteFinanceTransaction,
+  deleteHostelGatePass,
+  deleteHostelMaintenance,
+  deleteHostelRoom,
   deleteInvoice,
   deletePayrollRun,
   deleteApprovalItem,
   deleteSyllabusProgress,
+  deleteTransportAllocation,
+  deleteTransportRoute,
+  deleteTransportVehicle,
+  enrollAdmission,
   getApprovalItems,
+  getAdmissionOnboarding,
   getBooks,
   getEmployees,
   getFinanceTransactions,
   getFinanceParticipants,
+  getGlobalSettings,
+  getHostelGatePasses,
+  getHostelMaintenance,
+  getHostelRooms,
+  getHostelStudents,
   getInvoices,
   getLeaveRequests,
   getLibraryCirculation,
   getLibraryMembers,
+  getParentCommunications,
   getPayrollConfigs,
   getPayrollRuns,
+  getRolePermissionMatrix,
   getStaffAttendance,
   getSyllabusProgress,
+  getTransportAllocations,
+  getTransportParticipantsExpanded,
+  getTransportRoutes,
+  getTransportVehicles,
   issueLibraryBook,
   returnLibraryBook,
   reviewLeaveRequest,
   reviewApprovalItem,
+  saveGlobalSettings,
   savePayrollConfig,
   saveStaffAttendance,
+  updateHostelGatePass,
+  updateHostelMaintenance,
+  updateHostelRoom,
+  updateParentCommunication,
   updatePayrollRun,
   updateSyllabusProgress,
+  updateTransportAllocation,
+  updateTransportRoute,
+  updateTransportVehicle,
 } from "../controllers/operationsController.js";
 
 const router = express.Router();
@@ -113,13 +147,17 @@ router
   .post(authorizePermission(PERMISSIONS.USERS_MANAGE), createUser);
 router.get("/audit-logs", authorizePermission(PERMISSIONS.USERS_MANAGE, PERMISSIONS.SUPPORT_MANAGE), getAuditLogs);
 router.get("/managed-users", authorizePermission(PERMISSIONS.STUDENTS_MANAGE, PERMISSIONS.USERS_MANAGE), getManagedUsers);
+router.get("/role-permissions", authorizePermission(PERMISSIONS.USERS_MANAGE, PERMISSIONS.SUPPORT_MANAGE), getRolePermissionMatrix);
 router.delete("/users/:id", authorizePermission(PERMISSIONS.USERS_MANAGE), deleteUser);
 router.patch("/users/:id/suspension", authorizePermission(PERMISSIONS.USERS_MANAGE), updateUserSuspension);
+router.route("/settings/global").get(authorizePermission(PERMISSIONS.USERS_MANAGE, PERMISSIONS.SUPPORT_MANAGE), getGlobalSettings).post(authorizePermission(PERMISSIONS.USERS_MANAGE, PERMISSIONS.SUPPORT_MANAGE), saveGlobalSettings);
 
 router
   .route("/admissions")
   .get(authorizePermission(PERMISSIONS.ADMISSIONS_MANAGE), getAdmissions)
   .post(authorizePermission(PERMISSIONS.ADMISSIONS_MANAGE), createAdmission);
+router.get("/admissions/onboarding", authorizePermission(PERMISSIONS.ADMISSIONS_MANAGE), getAdmissionOnboarding);
+router.post("/admissions/:id/enroll", authorizePermission(PERMISSIONS.ADMISSIONS_MANAGE), enrollAdmission);
 router.delete("/admissions/:id", authorizePermission(PERMISSIONS.ADMISSIONS_MANAGE), deleteAdmission);
 router.patch("/admissions/:id", authorizePermission(PERMISSIONS.ADMISSIONS_MANAGE), updateAdmission);
 
@@ -225,5 +263,30 @@ router.delete("/management/approvals/:id", authorizePermission(PERMISSIONS.APPRO
 router.route("/hod/syllabus-progress").get(authorizePermission(PERMISSIONS.COURSES_MANAGE, PERMISSIONS.SUBJECTS_MANAGE), getSyllabusProgress).post(authorizePermission(PERMISSIONS.COURSES_MANAGE, PERMISSIONS.SUBJECTS_MANAGE), createSyllabusProgress);
 router.patch("/hod/syllabus-progress/:id", authorizePermission(PERMISSIONS.COURSES_MANAGE, PERMISSIONS.SUBJECTS_MANAGE), updateSyllabusProgress);
 router.delete("/hod/syllabus-progress/:id", authorizePermission(PERMISSIONS.COURSES_MANAGE, PERMISSIONS.SUBJECTS_MANAGE), deleteSyllabusProgress);
+
+router.route("/parent/communications").get(authorizePermission(PERMISSIONS.FEES_VIEW, PERMISSIONS.USERS_MANAGE, PERMISSIONS.NOTIFICATIONS_VIEW), getParentCommunications).post(authorizePermission(PERMISSIONS.FEES_VIEW, PERMISSIONS.USERS_MANAGE, PERMISSIONS.NOTIFICATIONS_VIEW), createParentCommunication);
+router.patch("/parent/communications/:id", authorizePermission(PERMISSIONS.USERS_MANAGE, PERMISSIONS.STUDENTS_MANAGE, PERMISSIONS.NOTIFICATIONS_VIEW), updateParentCommunication);
+
+router.get("/hostel/students", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), getHostelStudents);
+router.route("/hostel/rooms").get(authorizePermission(PERMISSIONS.HOSTEL_MANAGE), getHostelRooms).post(authorizePermission(PERMISSIONS.HOSTEL_MANAGE), createHostelRoom);
+router.patch("/hostel/rooms/:id", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), updateHostelRoom);
+router.delete("/hostel/rooms/:id", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), deleteHostelRoom);
+router.route("/hostel/gate-passes").get(authorizePermission(PERMISSIONS.HOSTEL_MANAGE), getHostelGatePasses).post(authorizePermission(PERMISSIONS.HOSTEL_MANAGE), createHostelGatePass);
+router.patch("/hostel/gate-passes/:id", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), updateHostelGatePass);
+router.delete("/hostel/gate-passes/:id", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), deleteHostelGatePass);
+router.route("/hostel/maintenance").get(authorizePermission(PERMISSIONS.HOSTEL_MANAGE), getHostelMaintenance).post(authorizePermission(PERMISSIONS.HOSTEL_MANAGE), createHostelMaintenance);
+router.patch("/hostel/maintenance/:id", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), updateHostelMaintenance);
+router.delete("/hostel/maintenance/:id", authorizePermission(PERMISSIONS.HOSTEL_MANAGE), deleteHostelMaintenance);
+
+router.get("/transport/participants", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), getTransportParticipantsExpanded);
+router.route("/transport/routes").get(authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), getTransportRoutes).post(authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), createTransportRoute);
+router.patch("/transport/routes/:id", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), updateTransportRoute);
+router.delete("/transport/routes/:id", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), deleteTransportRoute);
+router.route("/transport/allocations").get(authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), getTransportAllocations).post(authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), createTransportAllocation);
+router.patch("/transport/allocations/:id", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), updateTransportAllocation);
+router.delete("/transport/allocations/:id", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), deleteTransportAllocation);
+router.route("/transport/fleet").get(authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), getTransportVehicles).post(authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), createTransportVehicle);
+router.patch("/transport/fleet/:id", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), updateTransportVehicle);
+router.delete("/transport/fleet/:id", authorizePermission(PERMISSIONS.TRANSPORT_MANAGE), deleteTransportVehicle);
 
 export default router;

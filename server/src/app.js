@@ -14,7 +14,7 @@ import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 dotenv.config();
 
 const app = express();
-const authLimiter = rateLimit({
+const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
   standardHeaders: true,
@@ -48,7 +48,8 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-app.use("/api/auth", authLimiter, authRoutes);
+app.use("/api/auth/login", loginLimiter);
+app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/erp", erpRoutes);
 

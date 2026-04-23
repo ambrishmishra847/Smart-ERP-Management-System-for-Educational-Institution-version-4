@@ -45,13 +45,14 @@ const CoursesPage = ({ view = "overview" }) => {
       api.get("/erp/subjects"),
     ]);
 
-    setCourses(courseResponse.data);
-    setSubjects(subjectResponse.data);
+    setCourses(Array.isArray(courseResponse.data) ? courseResponse.data : courseResponse.data?.rows || []);
+    setSubjects(Array.isArray(subjectResponse.data) ? subjectResponse.data : subjectResponse.data?.rows || []);
 
     if (hasPermission(user, PERMISSIONS.USERS_MANAGE)) {
       const usersResponse = await api.get("/erp/users");
-      setTeachers(usersResponse.data.filter((item) => ["faculty-professor", "hod"].includes(item.role)));
-      setStudents(usersResponse.data.filter((item) => item.role === "student"));
+      const users = Array.isArray(usersResponse.data) ? usersResponse.data : usersResponse.data?.rows || [];
+      setTeachers(users.filter((item) => ["faculty-professor", "hod"].includes(item.role)));
+      setStudents(users.filter((item) => item.role === "student"));
     }
   };
 

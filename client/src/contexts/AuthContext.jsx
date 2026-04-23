@@ -19,7 +19,11 @@ export const AuthProvider = ({ children }) => {
         const { data } = await api.get("/auth/me");
         setUser(data);
       } catch (error) {
-        localStorage.removeItem("smart_erp_token");
+        const status = error?.response?.status;
+        if (status === 401 || status === 403) {
+          localStorage.removeItem("smart_erp_token");
+          setUser(null);
+        }
       } finally {
         setLoading(false);
       }
@@ -48,4 +52,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-

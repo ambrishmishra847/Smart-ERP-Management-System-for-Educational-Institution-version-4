@@ -737,7 +737,7 @@ export const getNotifications = async (req, res) => {
     Notification.countDocuments(query),
   ]);
 
-  if (paginationRequested || req.query.isRead) {
+  if (req.query.page || req.query.isRead) {
     return res.json(buildPaginatedResponse({ rows: notifications, total, page, limit }));
   }
 

@@ -81,7 +81,7 @@ export const getDashboard = async (req, res) => {
   if (hasPermission(req.user, PERMISSIONS.USERS_MANAGE)) {
     const [students, teachers, totalCourses, totalSubjects, attendances, placements, recentAdmissions] = await Promise.all([
       User.find({ role: ROLES.STUDENT }).select("createdAt"),
-      User.countDocuments({ role: ROLES.TEACHER }),
+      User.countDocuments({ role: { $in: [ROLES.FACULTY_PROFESSOR, ROLES.HOD] } }),
       Course.countDocuments(),
       Subject.countDocuments(),
       Attendance.find().select("records"),

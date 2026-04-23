@@ -22,10 +22,12 @@ const admissionSchema = new mongoose.Schema(
     score: { type: Number, default: 0 },
     status: {
       type: String,
-      enum: ["lead", "under-review", "verified", "accepted", "rejected"],
+      enum: ["lead", "under-review", "verified", "accepted", "enrolled", "rejected"],
       default: "lead",
     },
     notes: String,
+    enrolledStudent: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    onboardedAt: Date,
   },
   { timestamps: true }
 );

@@ -20,7 +20,7 @@ const AnnouncementsPage = () => {
 
   const loadItems = async () => {
     const response = await api.get("/erp/announcements");
-    setItems(response.data);
+    setItems(Array.isArray(response.data) ? response.data : response.data?.rows || []);
   };
 
   useEffect(() => {

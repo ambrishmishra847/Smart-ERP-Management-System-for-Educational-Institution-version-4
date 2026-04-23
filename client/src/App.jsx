@@ -3,6 +3,7 @@ import AppShell from "./components/layout/DashboardLayout";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import { useAuth } from "./contexts/AuthContext";
 import AdmissionsPage from "./pages/AdmissionsPage";
+import AdmissionOnboardingPage from "./pages/AdmissionOnboardingPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AnnouncementsPage from "./pages/AnnouncementsPage";
 import AuditLogsPage from "./pages/AuditLogsPage";
@@ -16,6 +17,10 @@ import FinancePayrollProcessingPage from "./pages/FinancePayrollProcessingPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import FinanceTransactionsPage from "./pages/FinanceTransactionsPage";
 import EmployeesPage from "./pages/EmployeesPage";
+import GlobalSettingsPage from "./pages/GlobalSettingsPage";
+import HostelGatePassesPage from "./pages/HostelGatePassesPage";
+import HostelMaintenancePage from "./pages/HostelMaintenancePage";
+import HostelRoomsPage from "./pages/HostelRoomsPage";
 import HRStaffAttendancePage from "./pages/HRStaffAttendancePage";
 import HodFacultyPage from "./pages/HodFacultyPage";
 import LeaveRequestsPage from "./pages/LeaveRequestsPage";
@@ -26,16 +31,20 @@ import LibraryMembersPage from "./pages/LibraryMembersPage";
 import LoginPage from "./pages/LoginPage";
 import ManagementApprovalsPage from "./pages/ManagementApprovalsPage";
 import NotificationsPage from "./pages/NotificationsPage";
+import ParentCommunicationPage from "./pages/ParentCommunicationPage";
 import PlacementsPage from "./pages/PlacementsPage";
 import ProfilePage from "./pages/ProfilePage";
 import PayrollSetupPage from "./pages/PayrollSetupPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ResultsPage from "./pages/ResultsPage";
+import RolePermissionsPage from "./pages/RolePermissionsPage";
 import RoleWorkspacePage from "./pages/RoleWorkspacePage";
-import SharedModulePage from "./pages/SharedModulePage";
 import StudentManagementPage from "./pages/StudentManagementPage";
 import SyllabusTrackingPage from "./pages/SyllabusTrackingPage";
 import TimetablePage from "./pages/TimetablePage";
+import TransportAllocationsPage from "./pages/TransportAllocationsPage";
+import TransportFleetPage from "./pages/TransportFleetPage";
+import TransportRoutesPage from "./pages/TransportRoutesPage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import UsersPage from "./pages/UsersPage";
 import { PERMISSIONS } from "./utils/access";
@@ -56,14 +65,12 @@ const PARENT_ROLES = ["parent-guardian", "super-admin"];
 const HOSTEL_ROLES = ["hostel-warden", "super-admin"];
 const TRANSPORT_ROLES = ["transport-manager", "super-admin"];
 
-const shared = (title, subtitle, summary, points = [], links = []) => (
-  <SharedModulePage title={title} subtitle={subtitle} summary={summary} points={points} links={links} />
-);
-
 const directRoutes = [
   ["/admin/dashboard", ADMIN_ROLES, <DashboardPage />],
   ["/admin/users", ADMIN_ROLES, <UsersPage />],
   ["/admin/announcements", ADMIN_ROLES, <AnnouncementsPage />],
+  ["/admin/roles-permissions", ADMIN_ROLES, <RolePermissionsPage />],
+  ["/admin/global-settings", ADMIN_ROLES, <GlobalSettingsPage />],
   ["/admin/system-logs", ADMIN_ROLES, <AuditLogsPage />],
   ["/management/dashboard", MANAGEMENT_ROLES, <DashboardPage />],
   ["/management/finance-reports", MANAGEMENT_ROLES, <AnalyticsPage variant="finance" />],
@@ -78,6 +85,7 @@ const directRoutes = [
   ["/admission/dashboard", ADMISSION_ROLES, <DashboardPage />],
   ["/admission/leads", ADMISSION_ROLES, <AdmissionsPage view="leads" />],
   ["/admission/applications", ADMISSION_ROLES, <AdmissionsPage view="applications" />],
+  ["/admission/onboarding", ADMISSION_ROLES, <AdmissionOnboardingPage />],
   ["/admission/announcements", ADMISSION_ROLES, <AnnouncementsPage />],
   ["/hr/dashboard", HR_ROLES, <DashboardPage />],
   ["/hr/employees", HR_ROLES, <EmployeesPage />],
@@ -129,26 +137,22 @@ const directRoutes = [
   ["/parent/results", PARENT_ROLES, <ResultsPage />],
   ["/parent/fees", PARENT_ROLES, <FeesPage />],
   ["/parent/announcements", PARENT_ROLES, <AnnouncementsPage />],
+  ["/parent/messages", PARENT_ROLES, <ParentCommunicationPage />],
   ["/hostel/dashboard", HOSTEL_ROLES, <DashboardPage />],
+  ["/hostel/rooms", HOSTEL_ROLES, <HostelRoomsPage />],
+  ["/hostel/gate-passes", HOSTEL_ROLES, <HostelGatePassesPage />],
+  ["/hostel/maintenance", HOSTEL_ROLES, <HostelMaintenancePage />],
   ["/hostel/fees", HOSTEL_ROLES, <FeesPage />],
   ["/hostel/announcements", HOSTEL_ROLES, <AnnouncementsPage />],
   ["/transport/dashboard", TRANSPORT_ROLES, <DashboardPage />],
+  ["/transport/routes", TRANSPORT_ROLES, <TransportRoutesPage />],
+  ["/transport/allocations", TRANSPORT_ROLES, <TransportAllocationsPage />],
+  ["/transport/fleet", TRANSPORT_ROLES, <TransportFleetPage />],
   ["/transport/payments", TRANSPORT_ROLES, <FeesPage />],
   ["/transport/announcements", TRANSPORT_ROLES, <AnnouncementsPage />],
 ];
 
-const placeholderRoutes = [
-  ["/admin/roles-permissions", ADMIN_ROLES, "Roles And Permissions", "Manage RBAC", "Control role access and permission governance.", ["Define role policies for every institutional module", "Audit permission and access boundaries"], [{ label: "Open Users", to: "/admin/users" }]],
-  ["/admin/global-settings", ADMIN_ROLES, "Global Settings", "Institution profile and platform setup", "Control institution details, sessions, and shared ERP configuration.", ["Configure shared academic and communication defaults", "Extend SMTP, payments, and storage settings"], [{ label: "Admin Dashboard", to: "/admin/dashboard" }]],
-  ["/admission/onboarding", ADMISSION_ROLES, "Admission Onboarding", "Convert applicants to enrolled students", "Coordinate document verification, fee initiation, and onboarding actions.", ["Track onboarding stage completion", "Extend with roll-number and ID generation"], [{ label: "Applications", to: "/admission/applications" }]],
-  ["/parent/messages", PARENT_ROLES, "Parent Communication", "Appointments and updates", "Review notices and prepare parent communication workflows.", ["Track communication from faculty and HOD", "Extend with appointment scheduling"], [{ label: "Notifications", to: "/notifications" }]],
-  ["/hostel/rooms", HOSTEL_ROLES, "Hostel Rooms", "Room allotment and occupancy", "Track room availability, bed capacity, and hostel assignments.", ["Monitor occupancy and vacancy", "Extend room transfers and waiting list"], [{ label: "Gate Passes", to: "/hostel/gate-passes" }]],
-  ["/hostel/gate-passes", HOSTEL_ROLES, "Hostel Gate Passes", "Entry and movement control", "Track gate passes, entry-exit permissions, and night oversight.", ["Monitor out-pass usage and return timing", "Extend QR or biometric validation"], [{ label: "Maintenance", to: "/hostel/maintenance" }]],
-  ["/hostel/maintenance", HOSTEL_ROLES, "Hostel Maintenance", "Repair and issue tracking", "Log, assign, and close maintenance requests for hostel facilities.", ["Track room-level issues", "Extend SLA and escalation flow"], [{ label: "Hostel Dashboard", to: "/hostel/dashboard" }]],
-  ["/transport/routes", TRANSPORT_ROLES, "Transport Routes", "Bus routes and stops", "Manage route planning, stops, and schedule structure.", ["Track service coverage and route planning", "Extend conflict and capacity checks"], [{ label: "Allocations", to: "/transport/allocations" }]],
-  ["/transport/allocations", TRANSPORT_ROLES, "Transport Allocations", "Passenger route assignment", "Allocate students and staff to routes, stops, and vehicles.", ["Track route riders and seat usage", "Extend capacity balancing"], [{ label: "Fleet", to: "/transport/fleet" }]],
-  ["/transport/fleet", TRANSPORT_ROLES, "Transport Fleet", "Vehicles and maintenance logs", "Monitor vehicle maintenance, fuel, and driver allocation.", ["Track vehicle readiness and fuel use", "Extend breakdown alerts and driver roster"], [{ label: "Payments", to: "/transport/payments" }]],
-];
+const placeholderRoutes = [];
 
 const legacyRoutes = [
   ["/users", [PERMISSIONS.USERS_MANAGE], <UsersPage />],
